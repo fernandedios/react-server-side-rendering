@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "React server side rendering project",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "dev:build:server": "webpack --config webpack.server.js"
+  },
   "author": "Fernan de Dios",
   "license": "MIT",
   "dependencies": {
