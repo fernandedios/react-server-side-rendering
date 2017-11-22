@@ -1,16 +1,27 @@
-const express = require('express');
-const React = require('react');
-const renderToString = require('react-dom/server').renderToString;
+import express from 'express';
+import React from 'react';
+import { renderToString } from 'react-dom/server';
 
-const Home = require('./client/components/Home').default;
+import Home from './client/components/Home';
+
 const app = express();
-
 const PORT = process.env.PORT || 3000;
+
+app.use(express.static('public')); // make public folder accessible
 
 app.get('/', (req, res) => {
   const content = renderToString(<Home />);
+  const html = `
+    <html>
+      <head></head>
+      <bdoy>
+        <div>${content}</div>
+        <script src="bundle.js"></script>
+      </body>
+    </html>
+  `;
 
-  res.send(content);
+  res.send(html);
 });
 
 app.listen(PORT, () => {
