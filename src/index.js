@@ -11,11 +11,13 @@ app.use(express.static('public')); // make public folder accessible
 
 app.get('/', (req, res) => {
   const content = renderToString(<Home />);
+
+  // include client public/bundle.js on rendered html
   const html = `
     <html>
       <head></head>
       <bdoy>
-        <div>${content}</div>
+        <div id="root">${content}</div>
         <script src="bundle.js"></script>
       </body>
     </html>
