@@ -1,9 +1,16 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import Home from '../client/components/Home';
+import { StaticRouter } from 'react-router-dom';
+import Routes from '../client/Routes';
 
-export default () => {
-  const content = renderToString(<Home />);
+export default (req) => {
+  // pass REQUIRED property - context to StaticRouter to avoid error
+  // StaticRouter needs to know path via req object
+  const content = renderToString(
+    <StaticRouter location={req.path} context={{}}>
+      <Routes />
+    </StaticRouter>
+  );
 
   // include client public/bundle.js on rendered html
   return `
