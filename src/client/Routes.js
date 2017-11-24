@@ -1,13 +1,17 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
 import Home from './components/Home';
 import UsersList from './components/UsersList';
 
-export default () => {
-  return (
-    <div>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/users" component={UsersList} />
-    </div>
-  );
-};
+// use object for path declarations instead of typical react-router-dom jsx
+// necessary for ssr
+export default [
+  {
+    path: '/',
+    component: Home,
+    exact: true
+  },
+  {
+    path: '/users',
+    component: UsersList
+  }
+];
