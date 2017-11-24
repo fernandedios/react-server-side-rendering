@@ -1,6 +1,6 @@
 import React from 'react';
 import Home from './components/Home';
-import UsersList from './components/UsersList';
+import UsersList, { loadData } from './components/UsersList';
 
 // use object for path declarations instead of typical react-router-dom jsx
 // necessary for ssr
@@ -12,6 +12,7 @@ export default [
   },
   {
     path: '/users',
-    component: UsersList
+    component: UsersList,
+    loadData
   }
 ];

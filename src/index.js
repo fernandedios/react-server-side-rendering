@@ -1,5 +1,7 @@
 import 'babel-polyfill'; // necessary for methods like async-await
 import express from 'express';
+import { matchRoutes } from 'react-router-config';
+import Routes from './client/Routes';
 import renderer from './helpers/renderer';
 import createStore from './helpers/createStore';
 
@@ -11,10 +13,15 @@ app.use(express.static('public')); // make public folder accessible
 app.get('*', (req, res) => {
   const store = createStore();
 
-  // init and load data into the store
+  const promises = matchRoutes(Routes, req.path) // matchRoutes returns an array of components that need to be rendered
+    .map(({ route }) => {
+      return route.loadData ? route.loadData(store) : null // execute loadData if it exists, pass redux store
+    });
 
-
-  res.send(renderer(req, store));
+  // wait for all promises to resolve before rendering content
+  Promise.all(promises).then(() => {
+    res.send(renderer(req, store));
+  });
 });
 
 app.listen(PORT, () => {

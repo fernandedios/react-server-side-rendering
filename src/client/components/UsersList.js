@@ -27,4 +27,10 @@ function mapStateToProps({ users }) {
   return { users };
 }
 
+function loadData(store) {
+  // manually dispatch action creator
+  return store.dispatch(fetchUsers()); // returns a promise 
+}
+
+export { loadData };
 export default connect(mapStateToProps, { fetchUsers })(UsersList);
