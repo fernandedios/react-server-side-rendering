@@ -1,18 +1,17 @@
 import React from 'react';
-import Home from './components/Home';
-import UsersList, { loadData } from './components/UsersList';
+import HomePage from './pages/HomePage';
+import UsersListPage from './pages/UsersListPage';
 
 // use object for path declarations instead of typical react-router-dom jsx
 // necessary for ssr
 export default [
   {
     path: '/',
-    component: Home,
+    ...HomePage, // get component using object spread
     exact: true
   },
   {
     path: '/users',
-    component: UsersList,
-    loadData
+    ...UsersListPage // get component and loadData using onject spread
   }
 ];
