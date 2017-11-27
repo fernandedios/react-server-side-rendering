@@ -12,6 +12,6 @@ export default [
   },
   {
     path: '/users',
-    ...UsersListPage // get component and loadData using onject spread
+    ...UsersListPage // get component and loadData using object spread
   }
 ];
