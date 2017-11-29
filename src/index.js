@@ -9,7 +9,7 @@ import createStore from './helpers/createStore';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// send requests with /api to proxy server, send to ssr api server
+// send requests with /api to proxy server, proxy to access ssr api server
 app.use('/api', proxy('http://react-ssr-api.heroku.com', {
   // prevent google oauth issue
   proxyReqOptDecorator(opts) {
