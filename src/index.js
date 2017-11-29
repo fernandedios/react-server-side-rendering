@@ -10,17 +10,21 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // send requests with /api to proxy server, proxy to access ssr api server
-app.use('/api', proxy('http://react-ssr-api.heroku.com', {
-  // prevent google oauth issue
-  proxyReqOptDecorator(opts) {
-    opts.header['x-forwarded-host'] = 'localhost:3000';
-    return opts;
-  }
-}));
+app.use(
+  '/api',
+  proxy('http://react-ssr-api.herokuapp.com', {
+    // prevent google oauth issue
+    proxyReqOptDecorator(opts) {
+      opts.headers['x-forwarded-host'] = 'localhost:3000';
+      return opts;
+    }
+  })
+);
+
 app.use(express.static('public')); // make public folder accessible
 
 app.get('*', (req, res) => {
-  const store = createStore();
+  const store = createStore(req); // pass req object
 
   const promises = matchRoutes(Routes, req.path) // matchRoutes returns an array of components that need to be rendered
     .map(({ route }) => {
