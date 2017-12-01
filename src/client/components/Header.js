@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const Header = ({ auth }) => {
-  console.log(auth);
+  // console.log(auth);
 
   // show login or logout button depending on the auth value
   // a tag to force full browser render

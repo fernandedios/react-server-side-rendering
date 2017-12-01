@@ -6,12 +6,13 @@ import { renderRoutes } from 'react-router-config';
 import serialize from 'serialize-javascript';
 import Routes from '../client/Routes';
 
-export default (req, store) => {
-  // pass REQUIRED property - context to StaticRouter to avoid error
+// receive context as 3rd argument
+export default (req, store, context) => {
+  // pass REQUIRED property context to StaticRouter
   // StaticRouter needs to know path via req object
   const content = renderToString(
     <Provider store={store}>
-      <StaticRouter location={req.path} context={{}}>
+      <StaticRouter location={req.path} context={context}>
         <div>{renderRoutes(Routes)}</div>
       </StaticRouter>
     </Provider>

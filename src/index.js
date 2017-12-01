@@ -33,7 +33,15 @@ app.get('*', (req, res) => {
 
   // wait for all promises to resolve before rendering content
   Promise.all(promises).then(() => {
-    res.send(renderer(req, store));
+    const context = {};
+    const content = renderer(req, store, context); // pass along context
+
+    // check context if property notFound exists
+    if(context.notFound) {
+      res.status(404); // set status to 404
+    }
+
+    res.send(content); 
   });
 });
 
