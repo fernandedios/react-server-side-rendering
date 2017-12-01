@@ -2,6 +2,7 @@ import React from 'react';
 import App from './App';
 import HomePage from './pages/HomePage';
 import UsersListPage from './pages/UsersListPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 // use object for path declarations instead of typical react-router-dom jsx
 // necessary for ssr
@@ -17,6 +18,10 @@ export default [
       {
         path: '/users',
         ...UsersListPage // get component and loadData using object spread
+      },
+      {
+        // no path definition, will be shown if no path was matched
+        ...NotFoundPage // get component using object spread
       }
     ]
   }
