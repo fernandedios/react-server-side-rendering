@@ -2,6 +2,7 @@ import React from 'react';
 import App from './App';
 import HomePage from './pages/HomePage';
 import UsersListPage from './pages/UsersListPage';
+import AdminsListPage from './pages/AdminsListPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // use object for path declarations instead of typical react-router-dom jsx
@@ -14,6 +15,10 @@ export default [
         path: '/',
         ...HomePage, // get component using object spread
         exact: true
+      },
+      {
+        path: '/admins',
+        ...AdminsListPage // get component using object spread
       },
       {
         path: '/users',
