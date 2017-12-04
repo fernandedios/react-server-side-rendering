@@ -28,7 +28,14 @@ app.get('*', (req, res) => {
 
   const promises = matchRoutes(Routes, req.path) // matchRoutes returns an array of components that need to be rendered
     .map(({ route }) => {
-      return route.loadData ? route.loadData(store) : null // execute loadData if it exists, pass redux store
+      return route.loadData ? route.loadData(store) : null; // execute loadData if it exists, pass redux store
+    }).map(promise => {
+      if(promise) { // if not null
+        // wrap in new promise, wait for requests to either resolve or reject
+        return new Promise((resolve, reject) => {
+          promise.then(resolve).catch(resolve); // manually resolve
+        });
+      }
     });
 
   // wait for all promises to resolve before rendering content
@@ -36,12 +43,20 @@ app.get('*', (req, res) => {
     const context = {};
     const content = renderer(req, store, context); // pass along context
 
+    // console.log(context);
+
+    // if context.url exists, a redirect should happen
+    // context.url is populated by the Redirect component of the react-router-dom
+    if (context.url) {
+      return res.redirect(301, context.url);
+    }
+
     // check context if property notFound exists
     if(context.notFound) {
       res.status(404); // set status to 404
     }
 
-    res.send(content); 
+    res.send(content);
   });
 });
 
