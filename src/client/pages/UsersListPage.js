@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 import { fetchUsers } from '../actions';
 
 class UsersList extends Component {
   componentDidMount() {
     this.props.fetchUsers();
+  }
+
+  head() {
+    // use template strings for jsx with dynamic elements for react-helmet
+    return (
+      <Helmet>
+        <title>{`${this.props.users.length} Users Loaded`}</title>
+        <meta property="og:title" content="Users App" />
+      </Helmet>
+    );
   }
 
   renderUsers() {
@@ -16,6 +27,7 @@ class UsersList extends Component {
   render() {
     return (
       <div>
+        {this.head()}
         List of users
         {this.renderUsers()}
       </div>
